@@ -1,0 +1,6 @@
+deb http://deb.debian.org/debian bullseye main
+deb http://security.debian.org/debian-security bullseye-security main
+deb http://deb.debian.org/debian bullseye-updates main
+deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20211102 bullseye main
+deb [check-valid-until=no] http://snapshot.debian.org/archive/debian-security/20211102 bullseye-security main
+deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20211102 bullseye-updates main

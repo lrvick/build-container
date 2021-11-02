@@ -1,47 +1,19 @@
-ARG DOCKER=docker:20.10.8
+ARG DOCKER_IMAGE_HASH
+ARG DEBIAN_IMAGE_HASH
 
-FROM $DOCKER as docker
+FROM docker@sha256:${DOCKER_IMAGE_HASH} as docker
 
-FROM alpine:3.14
+FROM debian@sha256:${DEBIAN_IMAGE_HASH} as build
 
-ARG CLOUD_SDK_VERSION=353.0.0
-ARG BUILDX=v0.6.3
-ARG GIT_CHGLOG_VERSION=0.9.1
+ARG CLOUD_SDK_VERSION
+ARG BUILDX
+ARG GIT_CHGLOG_VERSION
 
 # janky janky janky
 ENV PATH /google-cloud-sdk/bin:$PATH
 
-RUN apk add --update --no-cache \
-  aws-cli \
-  bash \
-  coreutils \
-  curl \
-  gcc \
-  git \
-  git-lfs \
-  gnupg \
-  ip6tables \
-  iptables \
-  jq \
-  libc6-compat \
-  libffi-dev \
-  make \
-  musl-dev \
-  openssh-client \
-  openssl-dev \
-  ovmf \
-  perl-utils \
-  py3-crcmod \
-  py3-pip \
-  python3 \
-  python3-dev \
-  qemu-img \
-  qemu-system-aarch64 \
-  qemu-system-x86_64 \
-  rust \
-  sed \
-  tar \
-  xz
+ADD files /
+RUN apt-install
 
 # Install gcloud
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${CLOUD_SDK_VERSION}-linux-x86_64.tar.gz && \
